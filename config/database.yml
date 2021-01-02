@@ -1,0 +1,20 @@
+development: &defaults
+  adapter: postgresql
+  encoding: unicode
+  database: syt_rails_dev
+  pool: 5
+  username: harry
+  password: harry
+  host: localhost
+
+#test:
+#  <<: *defaults
+#  database: syt_rails_test
+
+staging:
+  <<: *defaults
+  database: syt_rails_core
+
+production:
+  <<: *defaults
+  database: syt_rails_production
