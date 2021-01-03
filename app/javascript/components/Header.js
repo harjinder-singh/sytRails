@@ -17,7 +17,6 @@ const Header = (props) => {
             console.log("logout error", error);
           });
       }
-    
 
     return (
         <Navbar bg="light" expand="lg">
@@ -35,8 +34,7 @@ const Header = (props) => {
                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
                 </Nav>
-                {props.email ? <Nav.Item href="#">Hi, {props.email}</Nav.Item> : ''}
-                {props.loggedInStatus === 'LOGGED_IN' ? <Nav.Link href="#" onClick={handleLogout}>Logout</Nav.Link> : ''}
+                {props.loggedInStatus === 'LOGGED_IN' ? (<Nav> <Nav.Link href="#" onClick={handleLogout}>Logout</Nav.Link> </Nav>) : (<Nav><Nav.Link href="#" onClick={() => {props.history.push('/login')}}>Login</Nav.Link> <Nav.Link href="#" onClick={() => {props.history.push('/register')}}>Register</Nav.Link></Nav>)}
             </Navbar.Collapse>
         </Navbar>
     );
