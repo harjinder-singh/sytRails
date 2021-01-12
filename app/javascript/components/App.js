@@ -12,29 +12,30 @@ const App = () => {
 
     const dispatch = useDispatch();
     const loggedInStatus = useSelector(state => state.auth.loggedInStatus)
-
-    const checkLoginStatus = () => {
-        axios
-        .get("http://localhost:3000/logged_in", { withCredentials: true })
-        .then(response => {
-            if (
-                response.data.logged_in &&
-                loggedInStatus === "NOT_LOGGED_IN"
-            ) {
-                dispatch(authenticate("LOGGED_IN", response.data.user))
-            } else if (
-                !response.data.logged_in &
-                (loggedInStatus === "LOGGED_IN")
-            ) {
-                dispatch(authenticate("NOT_LOGGED_IN", {}))
-            }
-            console.log('Response data', response.data)
-        }).catch(error => {
-        console.log("check login error", error);
-        });
-    }
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
+        const checkLoginStatus = async () => {
+            await axios
+            .get("http://localhost:3000/logged_in", { withCredentials: true })
+            .then(response => {
+                if (
+                    response.data.logged_in &&
+                    loggedInStatus === "NOT_LOGGED_IN"
+                ) {
+                    dispatch(authenticate("LOGGED_IN", response.data.user))
+                } else if (
+                    !response.data.logged_in &
+                    (loggedInStatus === "LOGGED_IN")
+                ) {
+                    dispatch(authenticate("NOT_LOGGED_IN", {}))
+                }
+                
+            }).catch(error => {
+            console.log("check login error", error);
+            });
+            setLoaded(true)
+        }
         checkLoginStatus();
       }, []);
 
@@ -48,7 +49,7 @@ const App = () => {
     
     return(
         <div className="app">
-            <BrowserRouter>
+            { loaded && <BrowserRouter>
                 <Switch>
                     <Route exact path={"/"} render={props => (
                         <Home
@@ -79,6 +80,7 @@ const App = () => {
                     />
                 </Switch>
             </BrowserRouter>
+            }
         </div>
 
     );

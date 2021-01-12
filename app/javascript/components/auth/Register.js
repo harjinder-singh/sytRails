@@ -21,6 +21,12 @@ export default class Registration extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    if(this.props.loggedInStatus === 'LOGGED_IN'){
+      this.props.history.push("/")
+    }
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value

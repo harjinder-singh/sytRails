@@ -21,6 +21,12 @@ export default class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    if(this.props.loggedInStatus === 'LOGGED_IN'){
+      this.props.history.push("/")
+    }
+  }
+
   handleChange(event) {
     console.log(event.target.name, event.target.value);
     this.setState({
