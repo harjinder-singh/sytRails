@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   delete :logout, to: "sessions#logout"
   get :logged_in, to: "sessions#logged_in"
 
+  namespace :api do
+    namespace :v1 do
+      resources :posts
+    end
+  end
+
   #Must be last declared route
   match '*path', to: 'app#index', via: :all
 end

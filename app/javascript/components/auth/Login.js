@@ -64,13 +64,13 @@ export default class Login extends Component {
       return (
       
       <div>
-        <Container fluid>
+        <Container fluid='true'>
           <Row>
             <Col sm={12}>
               <Header {...this.props}/>
             </Col>
           </Row>
-          <Row>
+          <Row style={{ 'paddingTop': 20 }}>
             <Col sm={4}>
             </Col>
             <Col sm={4}>

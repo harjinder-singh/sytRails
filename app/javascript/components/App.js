@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from './Home'
 import Login from './auth/Login'
 import Register from './auth/Register'
+import NewPost from './Posts/NewPost'
 import axios from 'axios'
 import {authenticate} from '../store/actions/auth';
 import { useSelector, useDispatch, connect } from 'react-redux'
@@ -71,6 +72,15 @@ const App = () => {
                     />
                     <Route exact path={"/register"} render={props => (
                         <Register
+                        {...props}
+                        handleLogin={handleLogin}
+                        handleLogout={handleLogout}
+                        loggedInStatus={loggedInStatus}
+                        />
+                    )}
+                    />
+                    <Route exact path={"/p/new"} render={props => (
+                        <NewPost
                         {...props}
                         handleLogin={handleLogin}
                         handleLogout={handleLogout}
