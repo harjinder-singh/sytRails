@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root 'app#index'
   resources :sessions, only: [:create]
   resources :registrations, only: [:create]
   delete :logout, to: "sessions#logout"
@@ -10,7 +9,10 @@ Rails.application.routes.draw do
       resources :posts
     end
   end
-
+  root 'app#index'
   #Must be last declared route
-  match '*path', to: 'app#index', via: :all
+  #match '*path', to: 'app#index', via: :all
+  get '*path', to: 'app#index', constraints: -> (req) do
+    !req.xhr? && req.format.html?
+  end
 end

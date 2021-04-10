@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Header from '../Header'
+import Header from '../Header/Header'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
@@ -19,6 +19,7 @@ export default class Login extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.dispatch = useDispatch()
   }
 
   componentDidMount() {
@@ -50,9 +51,11 @@ export default class Login extends Component {
         { withCredentials: true }
       )
       .then(response => {
+        console.log(response)
         if (response.data.logged_in) {
-            this.props.handleLogin(response.data)
             this.props.history.push("/");
+        }else{
+          throw new Error('Something went wrong');
         }
       })
       .catch(error => {
@@ -65,11 +68,6 @@ export default class Login extends Component {
       
       <div>
         <Container fluid='true'>
-          <Row>
-            <Col sm={12}>
-              <Header {...this.props}/>
-            </Col>
-          </Row>
           <Row style={{ 'paddingTop': 20 }}>
             <Col sm={4}>
             </Col>

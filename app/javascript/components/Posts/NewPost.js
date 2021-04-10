@@ -2,7 +2,7 @@ import React,{ useState, useEffect, Component} from "react";
 import {authenticate} from '../../store/actions/auth';
 import { useSelector, useDispatch, connect } from 'react-redux'
 import axios from 'axios'
-import Header from '../Header'
+import Header from '../Header/Header'
 import PostForm from './PostForm'
 
 class NewPost extends Component {
@@ -43,7 +43,8 @@ class NewPost extends Component {
             {
                 post: {
                 title: title,
-                description: description
+                description: description,
+                tag_ids: []
                 }
             },
             { withCredentials: true }

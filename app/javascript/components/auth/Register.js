@@ -1,11 +1,13 @@
-import React, { Component } from "react";
-import axios from "axios";
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Header from '../Header'
+import React, { Component } from "react"
+import axios from "axios"
+import { 
+  Form,
+  Button,
+  Container,
+  Row,
+  Col } from 'react-bootstrap'
+
+import Header from '../Header/Header'
 export default class Registration extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +65,7 @@ export default class Registration extends Component {
   render() {
     return (
       <div>
-        <Container fluid>
+        <Container fluid="true">
           <Row>
             <Col sm={12}>
               <Header {...this.props}/>
@@ -76,7 +78,7 @@ export default class Registration extends Component {
               <Form onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail" >
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" name="email" placeholder="Enter email"
+                  <Form.Control type="email" id="email" name="email" placeholder="Enter email"
                             onChange={this.handleChange}
                             required/>
                   <Form.Text className="text-muted">
@@ -86,14 +88,14 @@ export default class Registration extends Component {
 
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" name="password" placeholder="Password"
+                  <Form.Control type="password" id="password" name="password" placeholder="Password"
                             onChange={this.handleChange}
                             required />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formBasicPasswordConfirmation">
                   <Form.Label>Password Confirmation</Form.Label>
-                  <Form.Control type="password" name="password_confirmation" placeholder="Password Confirmation"
+                  <Form.Control type="password" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation"
                             onChange={this.handleChange}
                             required />
                 </Form.Group>
