@@ -1,73 +1,106 @@
 import React,{ useState, useEffect, Component} from "react";
-import {authenticate} from '../../store/actions/auth';
 import { useSelector, useDispatch, connect } from 'react-redux'
 import axios from 'axios'
-import Header from '../Header/Header'
+import FormData from 'form-data'
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+
 import PostForm from './PostForm'
 
-class NewPost extends Component {
-    constructor(props){
-        super(props)
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
-        this.state = {
-            title :"",
-            description : "",
-            errors : ""
-        }
-    
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+const newPost  = (props) =>  {
 
-    componentDidMount() {
-        if(this.props.loggedInStatus === 'NOT_LOGGED_IN'){
-            this.props.history.push("/login")
-        }
-    }
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState([]);
+    const [errors, setErrors] = useState("");
+    let [loading, setLoading] = useState(false);
+    let [color, setColor] = useState("#ffffff");
+    const loggedIn = useSelector(state => state.auth.loggedInStatus)
+
+    useEffect(() => {
+        console.log("[New post]", loggedIn)
+    }, [loggedIn]);
     
-    
-    handleChange(event) {
+
+    const handleChange = (event) => {
         console.log(event.target.name, event.target.value);
-        this.setState({
-            [event.target.name]: event.target.value
-        });
+        switch (event.target.name){
+            case "title": 
+                setTitle(event.target.value);
+                break;
+            case "description": 
+                setDescription(event.target.value);
+                break;
+            default: 
+                console.log("Should not reach here!!");
+        }
     }
     
-    handleSubmit(event) {
+    const handleSubmit = (event) =>  {
         event.preventDefault();
-        const { title, description } = this.state;
         console.log(title, description)
+        let data = new FormData();
+        data.append('post[image]', image[0], image.name);
+        data.append('post[title]', title)
+        data.append('post[description]', description)
+        console.log(data);
+        setLoading(true)
         axios
             .post(
             "http://localhost:3000/api/v1/posts",
-            {
-                post: {
-                title: title,
-                description: description,
-                tag_ids: []
-                }
-            },
-            { withCredentials: true }
+            data,
+            { 
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                } 
+            }
             )
             .then(response => {
+                setLoading(false)
                 if (response.data) {
-                    this.props.history.push("/");
+                    props.history.push("/");
                 }
             })
             .catch(error => {
+                setLoading(false)
+                setErrors(error)
                 console.log("login error", error);
             });
     }
 
-    render () {
-        return (
-            <div>
-                <Header {...this.props}/>
-                <PostForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-            </div>
-        );
+    const handleImageUpload = (event) => {
+        if(event){
+            setImage(event)
+        }else{
+            //Nothing Yet
+        }
     }
+
+    let postForm = (<PostForm
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        imageChangeHandler={handleImageUpload}
+    />)
+
+    if(loading){
+        postForm = (<div className="sweet-loading">
+            <ClipLoader color={color} loading={loading} css={override} size={150} />
+        </div>)
+    }
+
+    return (
+        <div>
+            {postForm }
+        </div>
+    );
   
 };
 
-export default NewPost;
+export default newPost;

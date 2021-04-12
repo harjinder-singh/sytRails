@@ -4,12 +4,13 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import ImageUploader from 'react-images-upload';
 
 const PostForm = (props) => {
   
   return (
     <Container fluid='true'>
-          <Row style={{ 'paddingTop': 20 }}>
+          <Row style={{ 'marginTop': '40px' }}>
             <Col sm={4}>
             </Col>
             <Col sm={4}>
@@ -26,6 +27,14 @@ const PostForm = (props) => {
                   <Form.Control type="textarea" name="description" placeholder="Description"
                             onChange={props.handleChange} />
                 </Form.Group>
+              <ImageUploader
+                withIcon={true}
+                withPreview={true}
+                buttonText='Choose image'
+                onChange = {props.imageChangeHandler}
+                imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                maxFileSize={5242880}
+              />
                 <Button variant="primary" type="submit">
                   Create Post
                 </Button>

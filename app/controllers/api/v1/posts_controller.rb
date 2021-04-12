@@ -5,8 +5,15 @@ module Api
 
             def index
 
-                @posts = Post.all
-                render json: @posts, status: 200
+                @posts = @current_user.posts.reverse
+                @post_array = []
+                @posts.each do |post|
+                    post_with_images = {}
+                    post_with_images[:post] = post
+                    post_with_images[:image_url] = post.image ? url_for(post.image) : null
+                    @post_array << post_with_images
+                end
+                render json: @post_array, status: 200
 
             end
 
@@ -24,7 +31,7 @@ module Api
 
             # Strong params
             def posts_params
-                params.require(:post).permit(:title, :description)
+                params.require(:post).permit(:title, :description, :image)
             end
         end
     end

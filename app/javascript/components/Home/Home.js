@@ -12,6 +12,7 @@ const Home = (props) => {
   useEffect(() => {
       axios.get('http://localhost:3000/api/v1/posts').then(response => {
         if(response.data){
+          console.log(response.data)
           setPosts(response.data)
         }
       })

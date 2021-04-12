@@ -23,9 +23,10 @@ const App = (props) => {
             .get("http://localhost:3000/logged_in", { withCredentials: true })
             .then(response => {
                 console.log(response.data);
+                console.log("[App]", loggedInStatus)
                 if (response.data.logged_in){
                     loggedInStatus === "NOT_LOGGED_IN" ? dispatch(authenticate("LOGGED_IN", response.data.user)) : null;
-                    props.history.push('/')
+                    //props.history.push('/')
                 }else{
                     loggedInStatus === "LOGGED_IN" ? dispatch(authenticate("NOT_LOGGED_IN", {})) : null;
                     props.history.push('/login')

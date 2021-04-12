@@ -19,7 +19,7 @@ export default class Login extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.dispatch = useDispatch()
+    // this.dispatch = useDispatch()
   }
 
   componentDidMount() {
