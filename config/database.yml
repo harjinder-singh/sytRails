@@ -7,9 +7,9 @@ development: &defaults
   password: harry
   host: localhost
 
-#test:
-#  <<: *defaults
-#  database: syt_rails_test
+test:
+ <<: *defaults
+ database: syt_rails_test
 
 staging:
   <<: *defaults
